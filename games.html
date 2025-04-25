@@ -1,153 +1,563 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Games — Aditya Mahajan</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="./includes/main.css" />
-  <script defer src="./includes/loader.js"></script>
-  <style>
-    :root {
-      --primary: #2979FF;
-      --primary-light: #5C9EFF;
-      --accent: #00E5FF;
-      --accent-dim: rgba(0, 229, 255, 0.12);
-      --bg: #080D1A;
-      --bg2: #0D1526;
-      --surface: #111827;
-      --surface2: #1A2438;
-      --border: rgba(255, 255, 255, 0.07);
-      --text: #E8EDF5;
-      --text2: #8A99B3;
-      --text3: #4A5568;
-      --r: 14px;
-      --rs: 8px;
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-      --glow: 0 0 40px rgba(41, 121, 255, 0.18);
-      --ease: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
-    a { color: inherit; text-decoration: none; }
-    ::selection { background: var(--primary); color: #fff; }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 900; height: 66px; display: flex; align-items: center; justify-content: space-between; padding: 0 6vw; background: rgba(8,13,26,0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: 0 1px 0 var(--border); }
-    .nav-logo { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--primary-light), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-size: 0.87rem; font-weight: 500; color: var(--text2); transition: color var(--ease); position: relative; padding-bottom: 3px; }
-    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: width var(--ease); }
-    .nav-links a:hover, .nav-links a.active { color: var(--text); }
-    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-    .nav-btn { padding: 8px 20px; background: var(--primary); color: #fff; border-radius: 50px; font-size: 0.87rem; font-weight: 600; transition: all var(--ease); }
-    .nav-btn:hover { background: var(--primary-light); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(41,121,255,0.45); }
-    .hero { position: relative; min-height: 72vh; padding: 126px 6vw 70px; overflow: hidden; display: flex; align-items: center; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 45%, rgba(41,121,255,0.16) 0%, transparent 70%), radial-gradient(ellipse 45% 45% at 15% 85%, rgba(0,229,255,0.08) 0%, transparent 60%); }
-    .hero::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 48px 48px; mask-image: linear-gradient(to bottom, black, transparent); }
-    .inner { width: 100%; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
-    .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-dim); border: 1px solid rgba(0,229,255,0.22); color: var(--accent); padding: 6px 14px; border-radius: 50px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.4px; margin-bottom: 1.5rem; }
-    .badge-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: blink 2s infinite; }
-    h1 { font-size: clamp(2.7rem, 6vw, 4.7rem); font-weight: 800; letter-spacing: -2px; line-height: 1.05; max-width: 760px; }
-    h1 span { background: linear-gradient(135deg, var(--primary-light), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { margin: 1.25rem 0 2rem; color: var(--text2); max-width: 650px; font-size: 1rem; line-height: 1.75; }
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; transition: all var(--ease); cursor: pointer; }
-    .btn-p { background: var(--primary); color: #fff; box-shadow: 0 4px 20px rgba(41,121,255,0.3); }
-    .btn-p:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(41,121,255,0.5); }
-    .btn-o { background: transparent; color: var(--text); border: 1px solid var(--border); }
-    .btn-o:hover { border-color: var(--primary); color: var(--primary-light); transform: translateY(-2px); background: rgba(41,121,255,0.06); }
-    section { padding: 86px 6vw; }
-    .s-label { font-size: 0.73rem; font-weight: 700; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; margin-bottom: 0.6rem; }
-    .s-title { font-size: clamp(1.9rem, 4vw, 2.7rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; margin-bottom: 0.9rem; }
-    .s-title span { color: var(--primary-light); }
-    .s-sub { color: var(--text2); max-width: 580px; font-size: 1rem; line-height: 1.7; }
-    .s-head { margin-bottom: 3rem; }
-    .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-    .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.75rem; min-height: 285px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease); }
-    .game-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--primary), var(--accent)); opacity: 0; transition: opacity var(--ease); }
-    .game-card:hover { transform: translateY(-5px); border-color: rgba(41,121,255,0.28); box-shadow: var(--glow); }
-    .game-card:hover::before { opacity: 1; }
-    .game-visual { height: 118px; border-radius: 12px; background: linear-gradient(135deg, rgba(41,121,255,0.16), rgba(0,229,255,0.08)); border: 1px solid var(--border); display: grid; place-items: center; margin-bottom: 1.2rem; position: relative; overflow: hidden; }
-    .mini-board { display: grid; grid-template-columns: repeat(3, 28px); gap: 6px; }
-    .mini-board span { width: 28px; height: 28px; border-radius: 7px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); display: grid; place-items: center; font-weight: 800; color: var(--accent); }
-    .game-card h3 { font-size: 1.08rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .game-card p { color: var(--text2); font-size: 0.88rem; line-height: 1.65; flex: 1; margin-bottom: 1.2rem; }
-    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
-    .tag { padding: 3px 9px; border-radius: 50px; font-size: 0.71rem; font-weight: 600; background: var(--surface2); color: var(--text3); border: 1px solid var(--border); }
-    .tag.live { background: rgba(0,229,255,0.1); color: var(--accent); border-color: rgba(0,229,255,0.18); }
-    .tag.js { background: rgba(255,214,0,0.1); color: #E6C200; border-color: rgba(255,214,0,0.18); }
-    .tag.soon { background: rgba(138,153,179,0.1); color: var(--text2); }
-    .coming { opacity: 0.65; }
-    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2rem 6vw; text-align: center; color: var(--text3); font-size: 0.81rem; }
-    footer a { color: var(--primary-light); }
-    .rv { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
-    .rv.on { opacity: 1; transform: none; }
-    .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
-    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-    @media (max-width: 700px) { .nav-links, .nav-btn { display: none; } .hero { padding-top: 110px; min-height: auto; } section { padding: 66px 5vw; } }
-  </style>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Games — Aditya Mahajan</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+		rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+	<link rel="stylesheet" href="./includes/main.css" />
+	<script defer src="./includes/loader.js"></script>
+	<style>
+		:root {
+			--primary: #2979FF;
+			--primary-light: #5C9EFF;
+			--accent: #00E5FF;
+			--accent-dim: rgba(0, 229, 255, 0.12);
+			--bg: #080D1A;
+			--bg2: #0D1526;
+			--surface: #111827;
+			--surface2: #1A2438;
+			--border: rgba(255, 255, 255, 0.07);
+			--text: #E8EDF5;
+			--text2: #8A99B3;
+			--text3: #4A5568;
+			--r: 14px;
+			--rs: 8px;
+			--shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+			--glow: 0 0 40px rgba(41, 121, 255, 0.18);
+			--ease: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			font-family: 'Inter', sans-serif;
+			background: var(--bg);
+			color: var(--text);
+			line-height: 1.6;
+			overflow-x: hidden;
+			min-height: 100vh;
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		::selection {
+			background: var(--primary);
+			color: #fff;
+		}
+
+		nav {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 900;
+			height: 66px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 6vw;
+			background: rgba(8, 13, 26, 0.92);
+			backdrop-filter: blur(18px);
+			-webkit-backdrop-filter: blur(18px);
+			box-shadow: 0 1px 0 var(--border);
+		}
+
+		.nav-logo {
+			font-weight: 800;
+			font-size: 1.3rem;
+			letter-spacing: -0.5px;
+			background: linear-gradient(135deg, var(--primary-light), var(--accent));
+			-webkit-background-clip: text;
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		.nav-links {
+			display: flex;
+			gap: 2rem;
+			list-style: none;
+		}
+
+		.nav-links a {
+			font-size: 0.87rem;
+			font-weight: 500;
+			color: var(--text2);
+			transition: color var(--ease);
+			position: relative;
+			padding-bottom: 3px;
+		}
+
+		.nav-links a::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 0;
+			height: 2px;
+			background: var(--primary);
+			transition: width var(--ease);
+		}
+
+		.nav-links a:hover,
+		.nav-links a.active {
+			color: var(--text);
+		}
+
+		.nav-links a:hover::after,
+		.nav-links a.active::after {
+			width: 100%;
+		}
+
+		.nav-btn {
+			padding: 8px 20px;
+			background: var(--primary);
+			color: #fff;
+			border-radius: 50px;
+			font-size: 0.87rem;
+			font-weight: 600;
+			transition: all var(--ease);
+		}
+
+		.nav-btn:hover {
+			background: var(--primary-light);
+			transform: translateY(-1px);
+			box-shadow: 0 4px 20px rgba(41, 121, 255, 0.45);
+		}
+
+		.hero {
+			position: relative;
+			min-height: 72vh;
+			padding: 126px 6vw 70px;
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+		}
+
+		.hero::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(ellipse 80% 60% at 70% 45%, rgba(41, 121, 255, 0.16) 0%, transparent 70%), radial-gradient(ellipse 45% 45% at 15% 85%, rgba(0, 229, 255, 0.08) 0%, transparent 60%);
+		}
+
+		.hero::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+			background-size: 48px 48px;
+			mask-image: linear-gradient(to bottom, black, transparent);
+		}
+
+		.inner {
+			width: 100%;
+			max-width: 1200px;
+			margin: 0 auto;
+			position: relative;
+			z-index: 1;
+		}
+
+		.badge {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			background: var(--accent-dim);
+			border: 1px solid rgba(0, 229, 255, 0.22);
+			color: var(--accent);
+			padding: 6px 14px;
+			border-radius: 50px;
+			font-size: 0.78rem;
+			font-weight: 700;
+			letter-spacing: 0.4px;
+			margin-bottom: 1.5rem;
+		}
+
+		.badge-dot {
+			width: 7px;
+			height: 7px;
+			background: var(--accent);
+			border-radius: 50%;
+			animation: blink 2s infinite;
+		}
+
+		h1 {
+			font-size: clamp(2.7rem, 6vw, 4.7rem);
+			font-weight: 800;
+			letter-spacing: -2px;
+			line-height: 1.05;
+			max-width: 760px;
+		}
+
+		h1 span {
+			background: linear-gradient(135deg, var(--primary-light), var(--accent));
+			-webkit-background-clip: text;
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		.hero p {
+			margin: 1.25rem 0 2rem;
+			color: var(--text2);
+			max-width: 650px;
+			font-size: 1rem;
+			line-height: 1.75;
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 13px 26px;
+			border-radius: 50px;
+			font-weight: 600;
+			font-size: 0.9rem;
+			transition: all var(--ease);
+			cursor: pointer;
+		}
+
+		.btn-p {
+			background: var(--primary);
+			color: #fff;
+			box-shadow: 0 4px 20px rgba(41, 121, 255, 0.3);
+		}
+
+		.btn-p:hover {
+			background: var(--primary-light);
+			transform: translateY(-2px);
+			box-shadow: 0 8px 28px rgba(41, 121, 255, 0.5);
+		}
+
+		.btn-o {
+			background: transparent;
+			color: var(--text);
+			border: 1px solid var(--border);
+		}
+
+		.btn-o:hover {
+			border-color: var(--primary);
+			color: var(--primary-light);
+			transform: translateY(-2px);
+			background: rgba(41, 121, 255, 0.06);
+		}
+
+		section {
+			padding: 86px 6vw;
+		}
+
+		.s-label {
+			font-size: 0.73rem;
+			font-weight: 700;
+			letter-spacing: 2px;
+			color: var(--primary);
+			text-transform: uppercase;
+			margin-bottom: 0.6rem;
+		}
+
+		.s-title {
+			font-size: clamp(1.9rem, 4vw, 2.7rem);
+			font-weight: 800;
+			letter-spacing: -1px;
+			line-height: 1.15;
+			margin-bottom: 0.9rem;
+		}
+
+		.s-title span {
+			color: var(--primary-light);
+		}
+
+		.s-sub {
+			color: var(--text2);
+			max-width: 580px;
+			font-size: 1rem;
+			line-height: 1.7;
+		}
+
+		.s-head {
+			margin-bottom: 3rem;
+		}
+
+		.game-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+			gap: 1.5rem;
+		}
+
+		.game-card {
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: var(--r);
+			padding: 1.75rem;
+			min-height: 285px;
+			display: flex;
+			flex-direction: column;
+			position: relative;
+			overflow: hidden;
+			transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease);
+		}
+
+		.game-card::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 3px;
+			background: linear-gradient(90deg, var(--primary), var(--accent));
+			opacity: 0;
+			transition: opacity var(--ease);
+		}
+
+		.game-card:hover {
+			transform: translateY(-5px);
+			border-color: rgba(41, 121, 255, 0.28);
+			box-shadow: var(--glow);
+		}
+
+		.game-card:hover::before {
+			opacity: 1;
+		}
+
+		.game-visual {
+			height: 118px;
+			border-radius: 12px;
+			background: linear-gradient(135deg, rgba(41, 121, 255, 0.16), rgba(0, 229, 255, 0.08));
+			border: 1px solid var(--border);
+			display: grid;
+			place-items: center;
+			margin-bottom: 1.2rem;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.mini-board {
+			display: grid;
+			grid-template-columns: repeat(3, 28px);
+			gap: 6px;
+		}
+
+		.mini-board span {
+			width: 28px;
+			height: 28px;
+			border-radius: 7px;
+			background: rgba(255, 255, 255, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			display: grid;
+			place-items: center;
+			font-weight: 800;
+			color: var(--accent);
+		}
+
+		.game-card h3 {
+			font-size: 1.08rem;
+			font-weight: 800;
+			margin-bottom: 0.5rem;
+		}
+
+		.game-card p {
+			color: var(--text2);
+			font-size: 0.88rem;
+			line-height: 1.65;
+			flex: 1;
+			margin-bottom: 1.2rem;
+		}
+
+		.tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+			margin-bottom: 1.25rem;
+		}
+
+		.tag {
+			padding: 3px 9px;
+			border-radius: 50px;
+			font-size: 0.71rem;
+			font-weight: 600;
+			background: var(--surface2);
+			color: var(--text3);
+			border: 1px solid var(--border);
+		}
+
+		.tag.live {
+			background: rgba(0, 229, 255, 0.1);
+			color: var(--accent);
+			border-color: rgba(0, 229, 255, 0.18);
+		}
+
+		.tag.js {
+			background: rgba(255, 214, 0, 0.1);
+			color: #E6C200;
+			border-color: rgba(255, 214, 0, 0.18);
+		}
+
+		.tag.soon {
+			background: rgba(138, 153, 179, 0.1);
+			color: var(--text2);
+		}
+
+		.coming {
+			opacity: 0.65;
+		}
+
+		footer {
+			background: var(--bg2);
+			border-top: 1px solid var(--border);
+			padding: 2rem 6vw;
+			text-align: center;
+			color: var(--text3);
+			font-size: 0.81rem;
+		}
+
+		footer a {
+			color: var(--primary-light);
+		}
+
+		.rv {
+			opacity: 0;
+			transform: translateY(28px);
+			transition: opacity 0.65s ease, transform 0.65s ease;
+		}
+
+		.rv.on {
+			opacity: 1;
+			transform: none;
+		}
+
+		.d1 {
+			transition-delay: 0.1s;
+		}
+
+		.d2 {
+			transition-delay: 0.2s;
+		}
+
+		.d3 {
+			transition-delay: 0.3s;
+		}
+
+		@keyframes blink {
+
+			0%,
+			100% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0.4;
+			}
+		}
+
+		@media (max-width: 700px) {
+
+			.nav-links,
+			.nav-btn {
+				display: none;
+			}
+
+			.hero {
+				padding-top: 110px;
+				min-height: auto;
+			}
+
+			section {
+				padding: 66px 5vw;
+			}
+		}
+	</style>
 </head>
+
 <body data-page="games">
-  <div data-include="./includes/header.html"></div>
+	<div data-include="./includes/header.html"></div>
 
-  <main>
-    <header class="hero">
-      <div class="inner">
-        <div class="badge"><div class="badge-dot"></div>Interactive Playground</div>
-        <h1>Small games, <br><span>clean code</span>.</h1>
-        <p>A showcase of lightweight browser games built with HTML, CSS, and JavaScript. Each game opens on its own page so it can grow independently.</p>
-        <div style="display:flex; gap:1rem; flex-wrap:wrap">
-          <a href="tic-tac-toe.html" class="btn btn-p"><span class="material-icons-round" style="font-size:17px">sports_esports</span>Play Tic Tac Toe</a>
-          <a href="index.html" class="btn btn-o"><span class="material-icons-round" style="font-size:17px">arrow_back</span>Back to Portfolio</a>
-        </div>
-      </div>
-    </header>
+	<main>
+		<header class="hero">
+			<div class="inner">
+				<div class="badge">
+					<div class="badge-dot"></div>Interactive Playground
+				</div>
+				<h1>Small games, <br><span>clean code</span>.</h1>
+				<p>A showcase of lightweight browser games built with HTML, CSS, and JavaScript. Each game opens on its
+					own page so it can grow independently.</p>
+				<div style="display:flex; gap:1rem; flex-wrap:wrap">
+					<a href="tic-tac-toe.html" class="btn btn-p"><span class="material-icons-round"
+							style="font-size:17px">sports_esports</span>Play Tic Tac Toe</a>
+					<a href="index.html" class="btn btn-o"><span class="material-icons-round"
+							style="font-size:17px">arrow_back</span>Back to Portfolio</a>
+				</div>
+			</div>
+		</header>
 
-    <section id="games">
-      <div class="inner">
-        <div class="s-head rv">
-          <div class="s-label">Games Library</div>
-          <h2 class="s-title">All <span>Games</span></h2>
-          <p class="s-sub">Starting with Tic Tac Toe. The layout is ready for more games like Snake, Memory Cards, 2048, and Minesweeper.</p>
-        </div>
+		<section id="games">
+			<div class="inner">
+				<div class="s-head rv">
+					<div class="s-label">Games Library</div>
+					<h2 class="s-title">All <span>Games</span></h2>
+					<p class="s-sub">Starting with Tic Tac Toe. The layout is ready for more games like Snake, Memory
+						Cards, 2048, and Minesweeper.</p>
+				</div>
 
-        <div class="game-grid">
-          <article class="game-card rv d1">
-            <div class="game-visual" aria-hidden="true">
-              <div class="mini-board">
-                <span>X</span><span>O</span><span>X</span>
-                <span>O</span><span>X</span><span></span>
-                <span></span><span>O</span><span>X</span>
-              </div>
-            </div>
-            <h3>Tic Tac Toe</h3>
-            <p>A polished two-player browser game with turn tracking, win detection, draw detection, score keeping, and restart controls.</p>
-            <div class="tags"><span class="tag live">Live</span><span class="tag js">JavaScript</span><span class="tag">2 Player</span></div>
-            <a href="tic-tac-toe.html" class="btn btn-p"><span class="material-icons-round" style="font-size:17px">open_in_new</span>Open Game</a>
-          </article>
+				<div class="game-grid">
+					<article class="game-card rv d1">
+						<div class="game-visual" aria-hidden="true">
+							<div class="mini-board">
+								<span>X</span><span>O</span><span>X</span>
+								<span>O</span><span>X</span><span></span>
+								<span></span><span>O</span><span>X</span>
+							</div>
+						</div>
+						<h3>Tic Tac Toe</h3>
+						<p>A polished two-player browser game with turn tracking, win detection, draw detection, score
+							keeping, and restart controls.</p>
+						<div class="tags"><span class="tag live">Live</span><span class="tag js">JavaScript</span><span
+								class="tag">2 Player</span></div>
+						<a href="tic-tac-toe.html" class="btn btn-p"><span class="material-icons-round"
+								style="font-size:17px">open_in_new</span>Open Game</a>
+					</article>
 
-          <article class="game-card coming rv d2">
-            <div class="game-visual"><span class="material-icons-round" style="font-size:46px;color:var(--primary-light)">extension</span></div>
-            <h3>Memory Cards</h3>
-            <p>Flip cards, match pairs, and test memory. Placeholder card for the next game in the showcase.</p>
-            <div class="tags"><span class="tag soon">Coming Soon</span><span class="tag">Cards</span></div>
-            <span class="btn btn-o" style="justify-content:center; cursor:not-allowed">Coming Soon</span>
-          </article>
+					<article class="game-card coming rv d2">
+						<div class="game-visual"><span class="material-icons-round"
+								style="font-size:46px;color:var(--primary-light)">extension</span></div>
+						<h3>Memory Cards</h3>
+						<p>Flip cards, match pairs, and test memory. Placeholder card for the next game in the showcase.
+						</p>
+						<div class="tags"><span class="tag soon">Coming Soon</span><span class="tag">Cards</span></div>
+						<a href="memory-cards.html" class="btn btn-p"><span class="material-icons-round"
+								style="font-size:17px">open_in_new</span>Open Game</a>
+					</article>
 
-          <article class="game-card coming rv d3">
-            <div class="game-visual"><span class="material-icons-round" style="font-size:46px;color:var(--accent)">grid_view</span></div>
-            <h3>2048</h3>
-            <p>Slide tiles and combine numbers. Placeholder card ready for a future standalone page.</p>
-            <div class="tags"><span class="tag soon">Coming Soon</span><span class="tag">Puzzle</span></div>
-            <span class="btn btn-o" style="justify-content:center; cursor:not-allowed">Coming Soon</span>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
+					<article class="game-card coming rv d3">
+						<div class="game-visual"><span class="material-icons-round"
+								style="font-size:46px;color:var(--accent)">grid_view</span></div>
+						<h3>2048</h3>
+						<p>Slide tiles and combine numbers. Placeholder card ready for a future standalone page.</p>
+						<div class="tags"><span class="tag soon">Coming Soon</span><span class="tag">Puzzle</span></div>
+						<span class="btn btn-o" style="justify-content:center; cursor:not-allowed">Coming Soon</span>
+					</article>
+				</div>
+			</div>
+		</section>
+	</main>
 
-  <div data-include="./includes/footer.html"></div>
+	<div data-include="./includes/footer.html"></div>
 </body>
+
 </html>
