@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Mahajan — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <style>
+    /* ── Variables ─────────────────────────────────────── */
+    :root {
+      --primary:       #2979FF;
+      --primary-light: #5C9EFF;
+      --accent:        #00E5FF;
+      --accent-dim:    rgba(0,229,255,0.12);
+      --bg:            #080D1A;
+      --bg2:           #0D1526;
+      --surface:       #111827;
+      --surface2:      #1A2438;
+      --border:        rgba(255,255,255,0.07);
+      --text:          #E8EDF5;
+      --text2:         #8A99B3;
+      --text3:         #4A5568;
+      --r:             14px;
+      --rs:            8px;
+      --shadow:        0 8px 32px rgba(0,0,0,0.45);
+      --glow:          0 0 40px rgba(41,121,255,0.18);
+      --ease:          0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    ::selection { background: var(--primary); color: #fff; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #1a2e6e; border-radius: 3px; }
+
+    /* ── Layout ────────────────────────────────────────── */
+    section { padding: 96px 6vw; }
+    .inner { max-width: 1200px; margin: 0 auto; }
+    .s-label { font-size: 0.73rem; font-weight: 700; letter-spacing: 2px; color: var(--primary); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .s-title { font-size: clamp(1.9rem, 4vw, 2.7rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; margin-bottom: 0.9rem; }
+    .s-title span { color: var(--primary-light); }
+    .s-sub { color: var(--text2); max-width: 560px; font-size: 1rem; line-height: 1.7; }
+    .s-head { margin-bottom: 3.5rem; }
+
+    /* ── Shared buttons ────────────────────────────────── */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; transition: all var(--ease); cursor: pointer; }
+    .btn-p { background: var(--primary); color: #fff; box-shadow: 0 4px 20px rgba(41,121,255,0.3); }
+    .btn-p:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(41,121,255,0.5); }
+    .btn-o { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-o:hover { border-color: var(--primary); color: var(--primary-light); transform: translateY(-2px); background: rgba(41,121,255,0.06); }
+
+    /* ── Scroll reveal ─────────────────────────────────── */
+    .rv { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .rv.on { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; } .d4 { transition-delay: 0.4s; }
+
+    /* ── Nav ───────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      height: 66px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 6vw;
+      transition: background var(--ease), box-shadow var(--ease);
+    }
+    nav.scrolled { background: rgba(8,13,26,0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: 0 1px 0 var(--border); }
+    .nav-logo { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--primary-light), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { font-size: 0.87rem; font-weight: 500; color: var(--text2); transition: color var(--ease); position: relative; padding-bottom: 3px; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: width var(--ease); }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-btn { padding: 8px 20px; background: var(--primary); color: #fff; border-radius: 50px; font-size: 0.87rem; font-weight: 600; transition: background var(--ease), transform var(--ease), box-shadow var(--ease); }
+    .nav-btn:hover { background: var(--primary-light); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(41,121,255,0.45); }
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .burger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+    .mob-nav { display: none; position: fixed; inset: 0; z-index: 950; background: var(--bg); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .mob-nav.open { display: flex; }
+    .mob-nav a { font-size: 1.6rem; font-weight: 700; }
+    .mob-close { position: absolute; top: 18px; right: 18px; background: none; border: none; color: var(--text); cursor: pointer; }
+    .mob-close .material-icons-round { font-size: 30px; }
+
+    /* ── Hero ──────────────────────────────────────────── */
+    #hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 6vw 60px; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(41,121,255,0.11) 0%, transparent 70%), radial-gradient(ellipse 45% 45% at 15% 85%, rgba(0,229,255,0.06) 0%, transparent 60%); }
+    canvas { position: absolute; inset: 0; opacity: 0.35; }
+    .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4rem; width: 100%; max-width: 1200px; margin: 0 auto; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-dim); border: 1px solid rgba(0,229,255,0.22); color: var(--accent); padding: 6px 14px; border-radius: 50px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.4px; margin-bottom: 1.5rem; animation: up 0.6s ease both; }
+    .badge-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: blink 2s infinite; }
+    .hero-name { font-size: clamp(2.8rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -2px; line-height: 1.05; animation: up 0.6s 0.1s ease both; }
+    .hero-name span { background: linear-gradient(135deg, #5C9EFF, var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-role { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text2); margin: 0.9rem 0 0.4rem; animation: up 0.6s 0.18s ease both; }
+    .hero-co { display: inline-flex; align-items: center; gap: 6px; color: var(--primary-light); font-weight: 500; font-size: 0.95rem; animation: up 0.6s 0.24s ease both; }
+    .hero-bio { color: var(--text2); max-width: 520px; margin: 1.2rem 0 2rem; font-size: 1rem; line-height: 1.75; animation: up 0.6s 0.3s ease both; }
+    .hero-bio em { color: var(--accent); font-style: italic; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: up 0.6s 0.38s ease both; }
+    .hero-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; animation: up 0.6s 0.46s ease both; }
+    .stat-n { font-size: 1.9rem; font-weight: 800; color: var(--primary-light); line-height: 1; }
+    .stat-l { font-size: 0.72rem; color: var(--text3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.6px; }
+    .avatar-wrap { position: relative; flex-shrink: 0; animation: up 0.6s 0.14s ease both; }
+    .avatar-ring { width: 270px; height: 270px; border-radius: 50%; background: conic-gradient(var(--primary), var(--accent), var(--primary)); padding: 3px; animation: spin 9s linear infinite; }
+    .avatar-inner { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: var(--bg2); }
+    .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
+    .avatar-pill { position: absolute; bottom: 14px; right: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 50px; padding: 7px 13px; display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--text2); box-shadow: var(--shadow); }
+    .avatar-pill .material-icons-round { font-size: 15px; color: var(--primary); }
+
+    /* ── About ─────────────────────────────────────────── */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-text p { color: var(--text2); line-height: 1.85; margin-bottom: 1.1rem; }
+    .about-text p strong { color: var(--text); }
+    .chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 1.8rem; }
+    .chip { display: inline-flex; align-items: center; gap: 5px; padding: 6px 13px; border-radius: 50px; background: var(--surface2); border: 1px solid var(--border); font-size: 0.79rem; font-weight: 500; color: var(--text2); transition: all var(--ease); }
+    .chip .material-icons-round { font-size: 13px; }
+    .chip:hover { border-color: var(--primary); color: var(--primary-light); background: rgba(41,121,255,0.07); }
+    .about-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .hl-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.4rem; transition: transform var(--ease), border-color var(--ease); }
+    .hl-card:hover { transform: translateY(-3px); border-color: rgba(41,121,255,0.3); }
+    .hl-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+    .hl-num { font-size: 1.6rem; font-weight: 800; color: var(--primary-light); line-height: 1; }
+    .hl-lbl { font-size: 0.78rem; color: var(--text2); margin-top: 3px; }
+
+    /* ── Experience ────────────────────────────────────── */
+    #experience { background: var(--bg); }
+    .exp-timeline { position: relative; max-width: 900px; }
+    .exp-timeline::before { content: ''; position: absolute; left: 19px; top: 8px; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--primary), rgba(41,121,255,0.05)); }
+    .exp-item { position: relative; padding-left: 56px; margin-bottom: 2.5rem; }
+    .exp-dot { position: absolute; left: 10px; top: 6px; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); border: 3px solid var(--bg); box-shadow: 0 0 0 2px var(--primary); display: flex; align-items: center; justify-content: center; font-size: 9px; z-index: 1; }
+    .exp-dot.current { background: var(--accent); box-shadow: 0 0 0 2px var(--accent), 0 0 12px rgba(0,229,255,0.4); animation: blink-dot 2s infinite; }
+    .exp-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.5rem 1.75rem; transition: border-color var(--ease), box-shadow var(--ease); }
+    .exp-card:hover { border-color: rgba(41,121,255,0.3); box-shadow: var(--glow); }
+    .exp-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+    .exp-role { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .exp-badge-current { display: inline-flex; align-items: center; gap: 5px; background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.25); color: var(--accent); padding: 3px 10px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
+    .exp-company { color: var(--primary-light); font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; display: flex; align-items: center; gap: 6px; }
+    .exp-company .emp-type { color: var(--text3); font-weight: 400; font-size: 0.8rem; }
+    .exp-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .exp-date { font-size: 0.78rem; color: var(--text3); display: flex; align-items: center; gap: 4px; }
+    .exp-date .material-icons-round { font-size: 13px; }
+    .exp-points { padding-left: 0; display: flex; flex-direction: column; gap: 5px; }
+    .exp-points li { display: flex; gap: 8px; font-size: 0.87rem; color: var(--text2); line-height: 1.55; }
+    .exp-points li::before { content: '▸'; color: var(--primary); flex-shrink: 0; margin-top: 1px; font-size: 0.75rem; }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+    /* ── Skills ────────────────────────────────────────── */
+    #skills { background: var(--bg2); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.5rem; }
+    .sk-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.75rem; transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease); }
+    .sk-card:hover { transform: translateY(-4px); box-shadow: var(--glow); border-color: rgba(41,121,255,0.28); }
+    .sk-head { display: flex; align-items: center; gap: 11px; margin-bottom: 1.5rem; }
+    .sk-icon { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .ic-a { background: rgba(61,220,132,0.13); } .ic-m { background: rgba(255,145,0,0.13); }
+    .ic-g { background: rgba(213,0,249,0.13); }  .ic-t { background: rgba(0,229,255,0.13); }
+    .sk-head h3 { font-size: 0.95rem; font-weight: 700; }
+    .bars { display: flex; flex-direction: column; gap: 11px; }
+    .bar-top { display: flex; justify-content: space-between; margin-bottom: 5px; }
+    .bar-top span:first-child { font-size: 0.81rem; color: var(--text2); }
+    .bar-top span:last-child { font-size: 0.77rem; color: var(--text3); }
+    .bar-track { height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; width: 0; border-radius: 3px; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+
+    /* ── Projects ──────────────────────────────────────── */
+    #projects { background: var(--bg); }
+    .filter-row { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .fbtn { padding: 7px 17px; border-radius: 50px; font-size: 0.81rem; font-weight: 600; background: var(--surface); border: 1px solid var(--border); color: var(--text2); cursor: pointer; transition: all var(--ease); }
+    .fbtn.on, .fbtn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 1.5rem; }
+    .pc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.75rem; display: flex; flex-direction: column; transition: transform var(--ease), box-shadow var(--ease), border-color var(--ease); position: relative; overflow: hidden; }
+    .pc::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--primary), var(--accent)); opacity: 0; transition: opacity var(--ease); }
+    .pc:hover { transform: translateY(-5px); box-shadow: var(--glow); border-color: rgba(41,121,255,0.22); }
+    .pc:hover::before { opacity: 1; }
+    .pc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .pc-icon { font-size: 28px; }
+    .pc-meta { display: flex; align-items: center; gap: 8px; }
+    .pc-stars { display: flex; align-items: center; gap: 4px; font-size: 0.77rem; color: var(--text3); font-weight: 500; }
+    .pc-stars .material-icons-round { font-size: 13px; color: #FFD600; }
+    .pc-link { width: 33px; height: 33px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text3); transition: all var(--ease); }
+    .pc-link:hover { border-color: var(--primary); color: var(--primary); background: rgba(41,121,255,0.1); }
+    .pc-link .material-icons-round { font-size: 15px; }
+    .pc h3 { font-size: 1.02rem; font-weight: 700; margin-bottom: 0.45rem; }
+    .pc p { color: var(--text2); font-size: 0.87rem; line-height: 1.6; flex: 1; margin-bottom: 1.2rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { padding: 3px 9px; border-radius: 50px; font-size: 0.71rem; font-weight: 600; background: var(--surface2); color: var(--text3); border: 1px solid var(--border); }
+    .tk  { background: rgba(123,97,255,0.1); color: #7B61FF; border-color: rgba(123,97,255,0.18); }
+    .tp  { background: rgba(255,214,0,0.1);  color: #E6C200; border-color: rgba(255,214,0,0.18); }
+    .tj  { background: rgba(255,111,0,0.1);  color: #FF6F00; border-color: rgba(255,111,0,0.18); }
+    .tc  { background: rgba(130,36,227,0.1); color: #9C27B0; border-color: rgba(130,36,227,0.18); }
+    .tm  { background: rgba(0,200,83,0.1);   color: #00C853; border-color: rgba(0,200,83,0.18); }
+    .tu  { background: rgba(213,0,249,0.1);  color: #D500F9; border-color: rgba(213,0,249,0.18); }
+    .tpp { background: rgba(0,145,255,0.1);  color: #0091FF; border-color: rgba(0,145,255,0.18); }
+
+    /* ── YouTube ───────────────────────────────────────── */
+    #youtube { background: var(--bg2); }
+    .yt-card { background: linear-gradient(135deg, #150505 0%, #220808 100%); border: 1px solid rgba(255,0,0,0.18); border-radius: var(--r); padding: 3.5rem; display: flex; align-items: center; gap: 3rem; position: relative; overflow: hidden; max-width: 860px; }
+    .yt-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 85% 50%, rgba(255,0,0,0.07) 0%, transparent 60%); }
+    .yt-svg { flex-shrink: 0; position: relative; z-index: 1; }
+    .yt-svg svg { width: 76px; height: 76px; filter: drop-shadow(0 0 22px rgba(255,0,0,0.5)); }
+    .yt-body { position: relative; z-index: 1; }
+    .yt-body h3 { font-size: 1.55rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .yt-body p { color: var(--text2); margin-bottom: 1.5rem; max-width: 400px; }
+    .btn-yt { display: inline-flex; align-items: center; gap: 8px; background: #FF0000; color: #fff; padding: 12px 24px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; transition: all var(--ease); }
+    .btn-yt:hover { background: #CC0000; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,0,0,0.38); }
+    .btn-yt .material-icons-round { font-size: 18px; }
+
+    /* ── Contact ───────────────────────────────────────── */
+    #contact { background: var(--bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .soc-links { display: flex; flex-direction: column; gap: 12px; }
+    .soc-link { display: flex; align-items: center; gap: 15px; padding: 15px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); transition: all var(--ease); }
+    .soc-link:hover { border-color: var(--primary); transform: translateX(6px); background: rgba(41,121,255,0.05); }
+    .soc-icon { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 19px; }
+    .si-gh { background: rgba(255,255,255,0.07); color: #fff; }
+    .si-li { background: rgba(10,102,194,0.18); color: #0A66C2; }
+    .si-yt { background: rgba(255,0,0,0.12); color: #FF0000; }
+    .si-lt { background: rgba(57,190,117,0.15); color: #39BE75; font-size: 16px; }
+    .soc-txt .lbl { font-weight: 600; font-size: 0.88rem; }
+    .soc-txt .url { color: var(--text3); font-size: 0.77rem; margin-top: 2px; }
+    .soc-arr { margin-left: auto; color: var(--text3); }
+    .soc-link:hover .soc-arr { color: var(--primary); }
+    .cf { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 2rem; }
+    .cf h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 1.5rem; }
+    .fg { margin-bottom: 1.1rem; }
+    .fg label { font-size: 0.81rem; font-weight: 600; color: var(--text2); display: block; margin-bottom: 5px; }
+    .fg input, .fg textarea { width: 100%; padding: 10px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--rs); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.88rem; outline: none; transition: border-color var(--ease); }
+    .fg input:focus, .fg textarea:focus { border-color: var(--primary); }
+    .fg textarea { resize: vertical; min-height: 96px; }
+    .fg input::placeholder, .fg textarea::placeholder { color: var(--text3); }
+    .btn-send { width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: var(--rs); font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: all var(--ease); }
+    .btn-send:hover { background: var(--primary-light); }
+    .btn-send .material-icons-round { font-size: 17px; }
+
+    /* ── Footer ────────────────────────────────────────── */
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2rem 6vw; text-align: center; color: var(--text3); font-size: 0.81rem; }
+    footer a { color: var(--primary-light); }
+
+    /* ── Scroll-top ────────────────────────────────────── */
+    .stbtn { position: fixed; bottom: 26px; right: 26px; z-index: 800; width: 42px; height: 42px; border-radius: 50%; background: var(--primary); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 18px rgba(41,121,255,0.38); opacity: 0; pointer-events: none; transition: opacity var(--ease), transform var(--ease); }
+    .stbtn.on { opacity: 1; pointer-events: all; }
+    .stbtn:hover { transform: translateY(-3px); }
+
+    /* ── Keyframes ─────────────────────────────────────── */
+    @keyframes up    { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes spin  { to { transform: rotate(360deg); } }
+    @keyframes blink-dot { 0%,100% { box-shadow: 0 0 0 2px var(--accent), 0 0 12px rgba(0,229,255,0.4); } 50% { box-shadow: 0 0 0 2px var(--accent), 0 0 20px rgba(0,229,255,0.7); } }
+
+    /* ── Responsive ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-inner { text-align: center; }
+      .avatar-wrap { display: none; }
+      .hero-btns, .hero-stats { justify-content: center; }
+      .about-grid, .contact-grid { gap: 2.5rem; }
+      .yt-card { flex-direction: column; text-align: center; padding: 2.5rem; gap: 1.5rem; }
+      .about-highlights { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-btn { display: none; }
+      .burger { display: flex; }
+      .proj-grid, .skills-grid { grid-template-columns: 1fr; }
+      .about-highlights { grid-template-columns: 1fr 1fr; }
+      section { padding: 70px 5vw; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────── -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">AM</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-btn">Get In Touch</a>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mob-nav" id="mobnav">
+  <button class="mob-close" id="mobclose"><span class="material-icons-round">close</span></button>
+  <a href="#about"      class="mobl">About</a>
+  <a href="#experience" class="mobl">Experience</a>
+  <a href="#skills"     class="mobl">Skills</a>
+  <a href="#projects"   class="mobl">Projects</a>
+  <a href="#contact"    class="mobl">Contact</a>
+</div>
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <canvas id="c"></canvas>
+  <div class="hero-inner">
+    <div>
+      <div class="badge"><div class="badge-dot"></div>Open to Opportunities</div>
+      <h1 class="hero-name">Aditya<br/><span>Mahajan</span></h1>
+      <p class="hero-role">Android Developer &amp; ML Enthusiast</p>
+      <div class="hero-co">
+        <span class="material-icons-round" style="font-size:17px">business</span>
+        Analyst @ TIAA &nbsp;·&nbsp; Pune, India
+      </div>
+      <p class="hero-bio">
+        <em>"Machine Learning and Neural Networks are my activation functions."</em><br/>
+        4+ years building financial-grade Android apps at TIAA. Passionate about ML, automation, and creating content for the developer community.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-p">
+          <span class="material-icons-round" style="font-size:17px">rocket_launch</span>View Projects
+        </a>
+        <a href="https://github.com/skystone1000" target="_blank" rel="noopener" class="btn btn-o">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-n">4+</div><div class="stat-l">Years at TIAA</div></div>
+        <div><div class="stat-n">47+</div><div class="stat-l">Repositories</div></div>
+        <div><div class="stat-n">8+</div><div class="stat-l">Years Coding</div></div>
+      </div>
+    </div>
+    <div class="avatar-wrap">
+      <div class="avatar-ring">
+        <div class="avatar-inner">
+          <img src="https://avatars.githubusercontent.com/u/34326438?v=4" alt="Aditya Mahajan" />
+        </div>
+      </div>
+      <div class="avatar-pill">
+        <span class="material-icons-round">location_on</span>Pune, India
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ─────────────────────────────────────────────── -->
+<section id="about">
+  <div class="inner">
+    <div class="about-grid">
+      <div class="rv">
+        <div class="s-label">About Me</div>
+        <h2 class="s-title">Building things that <span>matter</span></h2>
+        <div class="about-text">
+          <p>I'm <strong>Aditya Mahajan</strong>, an Android Developer at <strong>TIAA</strong> in Pune, India. I build scalable, financial-grade mobile applications with Kotlin and Jetpack Compose, focusing on clean architecture and performance.</p>
+          <p>My background is deliberately broad — from <strong>ML/AI engineering</strong> (IBM Watson, stock prediction, IoT fault detection) to <strong>game development</strong> (Unity), <strong>embedded systems</strong> (Arduino, Raspberry Pi), and founding a document automation startup.</p>
+          <p>I also run <strong>Code with Adi</strong> on YouTube, creating project-based programming tutorials since 2020.</p>
+        </div>
+        <div class="chips">
+          <div class="chip"><span class="material-icons-round">location_on</span>Pune, India</div>
+          <div class="chip"><span class="material-icons-round">business</span>TIAA</div>
+          <div class="chip"><span class="material-icons-round">emoji_events</span>IIT Bombay Alum</div>
+          <div class="chip"><span class="material-icons-round">smart_toy</span>ML &amp; AI</div>
+          <div class="chip"><span class="material-icons-round">play_circle</span>Code with Adi</div>
+          <div class="chip"><span class="material-icons-round">sports_esports</span>Game Dev</div>
+          <div class="chip"><span class="material-icons-round">memory</span>Embedded Systems</div>
+          <div class="chip"><span class="material-icons-round">rocket_launch</span>Startup Founder</div>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="about-highlights">
+          <div class="hl-card">
+            <div class="hl-icon">📱</div>
+            <div class="hl-num">4+</div>
+            <div class="hl-lbl">Years Android Dev</div>
+          </div>
+          <div class="hl-card">
+            <div class="hl-icon">🧠</div>
+            <div class="hl-num">5+</div>
+            <div class="hl-lbl">ML / AI Projects</div>
+          </div>
+          <div class="hl-card">
+            <div class="hl-icon">🏢</div>
+            <div class="hl-num">8+</div>
+            <div class="hl-lbl">Companies &amp; Orgs</div>
+          </div>
+          <div class="hl-card">
+            <div class="hl-icon">▶️</div>
+            <div class="hl-num">5+</div>
+            <div class="hl-lbl">Years on YouTube</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Experience ─────────────────────────────────────────── -->
+<section id="experience">
+  <div class="inner">
+    <div class="s-head rv">
+      <div class="s-label">Experience</div>
+      <h2 class="s-title">Professional <span>Journey</span></h2>
+      <p class="s-sub">8+ years across Android development, ML engineering, embedded systems, and entrepreneurship.</p>
+    </div>
+
+    <div class="exp-timeline">
+
+      <!-- TIAA Analyst -->
+      <div class="exp-item rv">
+        <div class="exp-dot current"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Analyst — Android Developer</div>
+              <div class="exp-company">🏦 TIAA <span class="emp-type">· Full-time</span></div>
+            </div>
+            <span class="exp-badge-current"><span class="badge-dot"></span>Current</span>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>Aug 2022 – Present · 3 yrs 9 mos</span>
+            <span class="exp-date"><span class="material-icons-round">location_on</span>Pune, India · Hybrid</span>
+          </div>
+          <ul class="exp-points">
+            <li>Built scalable financial apps using Kotlin and MVVM architecture, enhancing maintainability and speeding up feature delivery.</li>
+            <li>Enhanced app stability by migrating legacy code, refactoring components, and optimizing lifecycle with LiveData and ViewModel, cutting technical debt by 25%.</li>
+            <li>Conducted POC for Jetpack Compose, advising modern UI adoption for a better user experience.</li>
+            <li>Integrated secure financial APIs using Retrofit and coroutines, boosting network efficiency by 30%.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag tk">Kotlin</span><span class="tag">MVVM</span><span class="tag">Jetpack Compose</span><span class="tag">Retrofit</span><span class="tag">Coroutines</span><span class="tag">LiveData</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIAA Trainee -->
+      <div class="exp-item rv d1">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Trainee — Software Developer</div>
+              <div class="exp-company">🏦 TIAA <span class="emp-type">· Full-time</span></div>
+            </div>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>Jul 2021 – Jul 2022 · 1 yr 1 mo</span>
+            <span class="exp-date"><span class="material-icons-round">location_on</span>Pune, India · Hybrid</span>
+          </div>
+          <ul class="exp-points">
+            <li>Built a GUI application for Automation Script Generation using TKinter and Django.</li>
+            <li>Implemented AI-driven XPath auto-updation using YOLO model for field detection (DarkFlow wrapper).</li>
+            <li>Reduced script maintenance time by 30% through intelligent automation.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag tp">Python</span><span class="tag">Django</span><span class="tag">TKinter</span><span class="tag tm">YOLO</span><span class="tag">DarkFlow</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- YouTube -->
+      <div class="exp-item rv d1">
+        <div class="exp-dot current"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">YouTube Content Creator</div>
+              <div class="exp-company">▶️ Code with Adi <span class="emp-type">· Freelance</span></div>
+            </div>
+            <span class="exp-badge-current"><span class="badge-dot"></span>Current</span>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>Jul 2020 – Present · 5 yrs 10 mos</span>
+          </div>
+          <ul class="exp-points">
+            <li>Creating tech-related and project-based programming tutorials and videos.</li>
+            <li>Topics span Android development, LeetCode solutions, ML projects, and programming fundamentals.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag tk">Kotlin</span><span class="tag tp">Python</span><span class="tag tpp">C++</span><span class="tag">Android</span><span class="tag">Tutorials</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- IIT Bombay -->
+      <div class="exp-item rv d1">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Android Developer Intern</div>
+              <div class="exp-company">🎓 Indian Institute of Technology, Bombay <span class="emp-type">· Part-time</span></div>
+            </div>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>Sep 2020 – Mar 2021 · 7 mos</span>
+            <span class="exp-date"><span class="material-icons-round">location_on</span>Mumbai, India</span>
+          </div>
+          <ul class="exp-points">
+            <li>Developed an E-Learning platform <strong>Ekal</strong> using MVC architecture with Java as the primary language.</li>
+            <li>Implemented PDF support and migrated the API client library from Volley to Retrofit.</li>
+            <li>Resolved UI bugs and implemented performance improvements across the platform.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag tj">Java</span><span class="tag">Android</span><span class="tag">Retrofit</span><span class="tag">MVC</span><span class="tag">E-Learning</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doc Assistant -->
+      <div class="exp-item rv d1">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Founder</div>
+              <div class="exp-company">🚀 Doc Assistant <span class="emp-type">· Full-time</span></div>
+            </div>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>Feb 2020 – Jul 2020 · 6 mos</span>
+          </div>
+          <ul class="exp-points">
+            <li>Founded a startup providing automation solutions for repetitive office document tasks with template/structure patterns.</li>
+            <li>Built NodeJS / Google AppScript solutions for custom document templates.</li>
+            <li>Integrated Firebase, MySQL, and CSV pipelines for data management.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">NodeJS</span><span class="tag">AppScript</span><span class="tag">Firebase</span><span class="tag">MySQL</span><span class="tag">Automation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TheSmartBridge -->
+      <div class="exp-item rv d1">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Artificial Intelligence Engineer</div>
+              <div class="exp-company">🤖 TheSmartBridge <span class="emp-type">· Internship</span></div>
+            </div>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>May 2020 – Jun 2020 · 2 mos</span>
+          </div>
+          <ul class="exp-points">
+            <li>Built an Intelligent Customer Help Desk chatbot with Smart Document Understanding (in collaboration with IBM).</li>
+            <li>Used Watson Assistant, IBM Cloud Functions, and Node-RED to create conversational AI for professional use.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag tm">IBM Watson</span><span class="tag">Node-RED</span><span class="tag">Cloud</span><span class="tag tm">Chatbot AI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Career Launcher -->
+      <div class="exp-item rv d1">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Machine Learning Engineer</div>
+              <div class="exp-company">📈 Career Launcher <span class="emp-type">· Part-time</span></div>
+            </div>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>Apr 2020 – Jun 2020 · 3 mos</span>
+          </div>
+          <ul class="exp-points">
+            <li>Predicted stock market prices using technical analysis, data visualization, and trade call prediction models.</li>
+            <li>Applied clustering techniques for portfolio diversification analysis.</li>
+            <li>Implemented SVM, Random Forest, and K-Means models using scikit-learn.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag tp">Python</span><span class="tag tm">scikit-learn</span><span class="tag">SVM</span><span class="tag">Random Forest</span><span class="tag">K-Means</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Olcademy -->
+      <div class="exp-item rv d1">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Software Tester</div>
+              <div class="exp-company">🧪 Olcademy <span class="emp-type">· Internship</span></div>
+            </div>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>Dec 2018 – Mar 2019 · 4 mos</span>
+          </div>
+          <ul class="exp-points">
+            <li>Wrote automated Selenium scripts for end-to-end website testing and scraping.</li>
+            <li>Implemented NLP pipelines for course reviews — Sentiment Analysis and Toxic Word detection.</li>
+            <li>Built ML models using NLTK, SpaCy, and clustering techniques.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag tp">Python</span><span class="tag">Selenium</span><span class="tag tm">NLP</span><span class="tag">NLTK</span><span class="tag">SpaCy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SGGS -->
+      <div class="exp-item rv d1">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Website &amp; Advertisement Co-ordinator — Pragyaa 2019</div>
+              <div class="exp-company">🎓 SGGS Institute of Engineering &amp; Technology <span class="emp-type">· Volunteer</span></div>
+            </div>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>Nov 2018 – Jan 2019 · 3 mos</span>
+            <span class="exp-date"><span class="material-icons-round">location_on</span>Nanded, India</span>
+          </div>
+          <ul class="exp-points">
+            <li>Led technical management for Pragyaa 2019, the college technical fest — app, website, and all design assets.</li>
+            <li>Built the Pragyaa 2019 Android app for technical events with basic CRUD operations in Java.</li>
+            <li>Integrated Firebase Database with MVC architecture.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag tj">Java</span><span class="tag">Android</span><span class="tag">Firebase</span><span class="tag">MVC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RNXG -->
+      <div class="exp-item rv d1">
+        <div class="exp-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-role">Embedded Systems Engineer</div>
+              <div class="exp-company">⚙️ RNXG <span class="emp-type">· Part-time</span></div>
+            </div>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-date"><span class="material-icons-round">schedule</span>Aug 2017 – Aug 2018 · 1 yr 1 mo</span>
+            <span class="exp-date"><span class="material-icons-round">location_on</span>Nanded, India</span>
+          </div>
+          <ul class="exp-points">
+            <li>Participated in Robocon and inter-college competitions — built autonomous and semi-autonomous robots.</li>
+            <li>Worked with Arduino and Raspberry Pi microcontrollers for real-time control systems.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="tag">Arduino</span><span class="tag">Raspberry Pi</span><span class="tag">C++</span><span class="tag">Robotics</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Skills ─────────────────────────────────────────────── -->
+<section id="skills">
+  <div class="inner">
+    <div class="s-head rv">
+      <div class="s-label">Skills</div>
+      <h2 class="s-title">Tech Stack &amp; <span>Expertise</span></h2>
+      <p class="s-sub">Spanning mobile development, machine learning, game dev, and competitive programming.</p>
+    </div>
+    <div class="skills-grid">
+
+      <div class="sk-card rv d1">
+        <div class="sk-head"><div class="sk-icon ic-a">📱</div><h3>Android Development</h3></div>
+        <div class="bars">
+          <div><div class="bar-top"><span>Kotlin</span><span>Expert</span></div><div class="bar-track"><div class="bar-fill" data-w="90"></div></div></div>
+          <div><div class="bar-top"><span>Jetpack Compose</span><span>Advanced</span></div><div class="bar-track"><div class="bar-fill" data-w="82"></div></div></div>
+          <div><div class="bar-top"><span>MVVM / Architecture</span><span>Advanced</span></div><div class="bar-track"><div class="bar-fill" data-w="85"></div></div></div>
+          <div><div class="bar-top"><span>Retrofit / Coroutines</span><span>Advanced</span></div><div class="bar-track"><div class="bar-fill" data-w="83"></div></div></div>
+          <div><div class="bar-top"><span>Java (Android)</span><span>Proficient</span></div><div class="bar-track"><div class="bar-fill" data-w="75"></div></div></div>
+        </div>
+      </div>
+
+      <div class="sk-card rv d2">
+        <div class="sk-head"><div class="sk-icon ic-m">🧠</div><h3>Machine Learning &amp; AI</h3></div>
+        <div class="bars">
+          <div><div class="bar-top"><span>Python</span><span>Advanced</span></div><div class="bar-track"><div class="bar-fill" data-w="85"></div></div></div>
+          <div><div class="bar-top"><span>Time Series / YOLO</span><span>Advanced</span></div><div class="bar-track"><div class="bar-fill" data-w="80"></div></div></div>
+          <div><div class="bar-top"><span>scikit-learn</span><span>Proficient</span></div><div class="bar-track"><div class="bar-fill" data-w="76"></div></div></div>
+          <div><div class="bar-top"><span>NLP / NLTK / SpaCy</span><span>Proficient</span></div><div class="bar-track"><div class="bar-fill" data-w="72"></div></div></div>
+          <div><div class="bar-top"><span>IBM Watson / Cloud AI</span><span>Proficient</span></div><div class="bar-track"><div class="bar-fill" data-w="68"></div></div></div>
+        </div>
+      </div>
+
+      <div class="sk-card rv d3">
+        <div class="sk-head"><div class="sk-icon ic-g">🎮</div><h3>Game &amp; Embedded</h3></div>
+        <div class="bars">
+          <div><div class="bar-top"><span>Unity (C#)</span><span>Proficient</span></div><div class="bar-track"><div class="bar-fill" data-w="72"></div></div></div>
+          <div><div class="bar-top"><span>Arduino / Raspberry Pi</span><span>Proficient</span></div><div class="bar-track"><div class="bar-fill" data-w="70"></div></div></div>
+          <div><div class="bar-top"><span>Game Design</span><span>Intermediate</span></div><div class="bar-track"><div class="bar-fill" data-w="60"></div></div></div>
+        </div>
+      </div>
+
+      <div class="sk-card rv d4">
+        <div class="sk-head"><div class="sk-icon ic-t">⚙️</div><h3>Tools &amp; Other</h3></div>
+        <div class="bars">
+          <div><div class="bar-top"><span>Git / GitHub</span><span>Advanced</span></div><div class="bar-track"><div class="bar-fill" data-w="88"></div></div></div>
+          <div><div class="bar-top"><span>C++ / DSA</span><span>Proficient</span></div><div class="bar-track"><div class="bar-fill" data-w="76"></div></div></div>
+          <div><div class="bar-top"><span>Django / NodeJS</span><span>Intermediate</span></div><div class="bar-track"><div class="bar-fill" data-w="62"></div></div></div>
+          <div><div class="bar-top"><span>Firebase</span><span>Proficient</span></div><div class="bar-track"><div class="bar-fill" data-w="75"></div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects (sorted by ⭐ stars) ─────────────────────────── -->
+<section id="projects">
+  <div class="inner">
+    <div class="s-head rv">
+      <div class="s-label">Projects</div>
+      <h2 class="s-title">Featured <span>Work</span></h2>
+      <p class="s-sub">Selected GitHub repositories sorted by community stars.</p>
+    </div>
+    <div class="filter-row rv">
+      <button class="fbtn on" data-f="all">All</button>
+      <button class="fbtn" data-f="ml">Machine Learning</button>
+      <button class="fbtn" data-f="android">Android</button>
+      <button class="fbtn" data-f="game">Game Dev</button>
+      <button class="fbtn" data-f="other">Other</button>
+    </div>
+    <div class="proj-grid">
+
+      <!-- ⭐ 5 stars -->
+      <div class="pc rv d1" data-cat="ml">
+        <div class="pc-top">
+          <div class="pc-icon">💨</div>
+          <div class="pc-meta">
+            <div class="pc-stars"><span class="material-icons-round">star</span>5 · 3 forks</div>
+            <a href="https://github.com/skystone1000/SBSPS-Challenge-1160" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>Wind Turbine Energy Prediction</h3>
+        <p>SBSPS Challenge — predicting wind turbine energy output with advanced ML regression. Top-performer in the hackathon competition.</p>
+        <div class="tags"><span class="tag tp">Python</span><span class="tag tm">ML</span><span class="tag">Regression</span><span class="tag">Energy</span></div>
+      </div>
+
+      <div class="pc rv d2" data-cat="other">
+        <div class="pc-top">
+          <div class="pc-icon">🤖</div>
+          <div class="pc-meta">
+            <div class="pc-stars"><span class="material-icons-round">star</span>5</div>
+            <a href="https://github.com/skystone1000/Programming-Bot" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>Programming Bot</h3>
+        <p>Trainable programming assistant that automates repetitive development tasks. Learns code patterns and executes them autonomously.</p>
+        <div class="tags"><span class="tag tp">Python</span><span class="tag tm">AI</span><span class="tag">Automation</span></div>
+      </div>
+
+      <!-- ⭐ 2 stars -->
+      <div class="pc rv d3" data-cat="ml">
+        <div class="pc-top">
+          <div class="pc-icon">⚡</div>
+          <div class="pc-meta">
+            <div class="pc-stars"><span class="material-icons-round">star</span>2</div>
+            <a href="https://github.com/skystone1000/ML-IoT-Electricity-Fault-Prediction" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>Electricity Fault Prediction</h3>
+        <p>IoT-powered transformer monitoring using time series analysis. Predicts electrical faults before they occur to prevent outages.</p>
+        <div class="tags"><span class="tag tp">Python</span><span class="tag tm">ML</span><span class="tag">Time Series</span><span class="tag">IoT</span></div>
+      </div>
+
+      <div class="pc rv d1" data-cat="other">
+        <div class="pc-top">
+          <div class="pc-icon">🏆</div>
+          <div class="pc-meta">
+            <div class="pc-stars"><span class="material-icons-round">star</span>2 · 1 fork</div>
+            <a href="https://github.com/skystone1000/LeetCode" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>LeetCode Solutions</h3>
+        <p>Curated solutions with explanations, synced with YouTube tutorials. Covers DSA patterns and competitive programming techniques.</p>
+        <div class="tags"><span class="tag tpp">C++</span><span class="tag">DSA</span><span class="tag">Algorithms</span></div>
+      </div>
+
+      <div class="pc rv d2" data-cat="android">
+        <div class="pc-top">
+          <div class="pc-icon">🌍</div>
+          <div class="pc-meta">
+            <div class="pc-stars"><span class="material-icons-round">star</span>2 · 2 forks</div>
+            <a href="https://github.com/skystone1000/Android-Country-Code-Menu" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>Android Country Code Menu</h3>
+        <p>Custom country code picker library for Android with a clean UI. A reusable component for international phone number input.</p>
+        <div class="tags"><span class="tag tj">Java</span><span class="tag">Android</span><span class="tag">Library</span></div>
+      </div>
+
+      <!-- 0 stars — highlighted projects -->
+      <div class="pc rv d3" data-cat="ml">
+        <div class="pc-top">
+          <div class="pc-icon">🌡️</div>
+          <div class="pc-meta">
+            <a href="https://github.com/skystone1000/Warehouse-Climate-Monitoring-Prediction" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>Warehouse Climate Monitoring</h3>
+        <p>Smart India Hackathon — real-time climate monitoring &amp; prediction system to ensure safe warehouse storage conditions.</p>
+        <div class="tags"><span class="tag tp">Python</span><span class="tag tm">ML</span><span class="tag">IoT</span><span class="tag">SIH</span></div>
+      </div>
+
+      <div class="pc rv d1" data-cat="android">
+        <div class="pc-top">
+          <div class="pc-icon">📰</div>
+          <div class="pc-meta">
+            <a href="https://github.com/skystone1000/Android-News-App" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>Android News App</h3>
+        <p>Modern news app built with MVVM and Jetpack Compose. Clean architecture with real-time news fetching and offline support.</p>
+        <div class="tags"><span class="tag tk">Kotlin</span><span class="tag">Compose</span><span class="tag">MVVM</span></div>
+      </div>
+
+      <div class="pc rv d2" data-cat="android">
+        <div class="pc-top">
+          <div class="pc-icon">🛒</div>
+          <div class="pc-meta">
+            <a href="https://github.com/skystone1000/Android-Ecommerce" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>E-Commerce Android App</h3>
+        <p>Full e-commerce app with Login/Signup, product listings, and shopping cart. Built in Kotlin with Firebase authentication.</p>
+        <div class="tags"><span class="tag tk">Kotlin</span><span class="tag">Firebase</span><span class="tag">Cart</span></div>
+      </div>
+
+      <div class="pc rv d3" data-cat="android">
+        <div class="pc-top">
+          <div class="pc-icon">🎵</div>
+          <div class="pc-meta">
+            <a href="https://github.com/skystone1000/Android-Spotify-Clone" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>Spotify Clone</h3>
+        <p>Full-featured Spotify clone with audio and video playback. Custom media controls and playlist management built in Java.</p>
+        <div class="tags"><span class="tag tj">Java</span><span class="tag">Media Player</span><span class="tag">Android</span></div>
+      </div>
+
+      <div class="pc rv d1" data-cat="game">
+        <div class="pc-top">
+          <div class="pc-icon">🍳</div>
+          <div class="pc-meta">
+            <a href="https://github.com/skystone1000/Unity-KitchenChaos" target="_blank" rel="noopener" class="pc-link"><span class="material-icons-round">open_in_new</span></a>
+          </div>
+        </div>
+        <h3>Kitchen Chaos (Unity)</h3>
+        <p>3D Unity game — chaotic kitchen simulation with ingredient management, cooking mechanics, and time-based challenges.</p>
+        <div class="tags"><span class="tag tc">C#</span><span class="tag tu">Unity</span><span class="tag">3D Game</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── YouTube ────────────────────────────────────────────── -->
+<section id="youtube">
+  <div class="inner">
+    <div class="s-head rv">
+      <div class="s-label">Content</div>
+      <h2 class="s-title">Code with <span>Adi</span></h2>
+      <p class="s-sub">Android development, ML project walkthroughs, and LeetCode solutions — project-based tutorials since 2020.</p>
+    </div>
+    <div class="yt-card rv">
+      <div class="yt-svg">
+        <svg viewBox="0 0 90 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M88.09 9.86C87.07 6.08 84.14 3.1 80.42 2.07C73.38 0 45.15 0 45.15 0s-28.23 0-35.27 2.07C6.16 3.1 3.23 6.08 2.21 9.86.15 16.99.15 31.72.15 31.72s0 14.73 2.06 21.86c1.02 3.78 3.95 6.76 7.67 7.79C16.92 63 45.15 63 45.15 63s28.23 0 35.27-1.63c3.72-1.03 6.65-4.01 7.67-7.79C90.15 46.45 90.15 31.72 90.15 31.72s0-14.73-2.06-21.86z" fill="#FF0000"/>
+          <path d="M36.12 45.02L59.52 31.72 36.12 18.42v26.6z" fill="white"/>
+        </svg>
+      </div>
+      <div class="yt-body">
+        <h3>Watch, Learn &amp; Build</h3>
+        <p>5+ years of project-based programming content. From Android apps to ML models — learn by building real projects.</p>
+        <a href="https://www.youtube.com/channel/UCZP7e3tdxPUtY2hHnwx5_4w" target="_blank" rel="noopener" class="btn-yt">
+          <span class="material-icons-round">play_arrow</span>Subscribe Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="inner">
+    <div class="s-head rv">
+      <div class="s-label">Contact</div>
+      <h2 class="s-title">Let's <span>Connect</span></h2>
+      <p class="s-sub">Have a project in mind, want to collaborate, or just say hi?</p>
+    </div>
+    <div class="contact-grid">
+      <div class="rv">
+        <div class="soc-links">
+          <a href="https://github.com/skystone1000" target="_blank" rel="noopener" class="soc-link">
+            <div class="soc-icon si-gh"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></div>
+            <div class="soc-txt"><div class="lbl">GitHub</div><div class="url">github.com/skystone1000</div></div>
+            <span class="material-icons-round soc-arr">arrow_forward</span>
+          </a>
+          <a href="https://tr.ee/FOH-xAnPx5" target="_blank" rel="noopener" class="soc-link">
+            <div class="soc-icon si-li"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+            <div class="soc-txt"><div class="lbl">LinkedIn</div><div class="url">Connect with me</div></div>
+            <span class="material-icons-round soc-arr">arrow_forward</span>
+          </a>
+          <a href="https://www.youtube.com/channel/UCZP7e3tdxPUtY2hHnwx5_4w" target="_blank" rel="noopener" class="soc-link">
+            <div class="soc-icon si-yt"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></div>
+            <div class="soc-txt"><div class="lbl">YouTube</div><div class="url">Code with Adi</div></div>
+            <span class="material-icons-round soc-arr">arrow_forward</span>
+          </a>
+          <a href="https://linktr.ee/skystone1000" target="_blank" rel="noopener" class="soc-link">
+            <div class="soc-icon si-lt">🌿</div>
+            <div class="soc-txt"><div class="lbl">Linktree</div><div class="url">linktr.ee/skystone1000</div></div>
+            <span class="material-icons-round soc-arr">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+      <div class="cf rv d2">
+        <h3>Send a Message</h3>
+        <form id="cform">
+          <div class="fg"><label>Your Name</label><input type="text" placeholder="Jane Smith" required /></div>
+          <div class="fg"><label>Email Address</label><input type="email" placeholder="jane@example.com" required /></div>
+          <div class="fg"><label>Message</label><textarea placeholder="Hi Aditya, I'd love to collaborate…" required></textarea></div>
+          <button type="submit" class="btn-send"><span class="material-icons-round">send</span>Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; built by <a href="https://github.com/skystone1000">Aditya Mahajan</a> &nbsp;·&nbsp; 2025</p>
+</footer>
+
+<button class="stbtn" id="stbtn">
+  <span class="material-icons-round">keyboard_arrow_up</span>
+</button>
+
+<script>
+/* ── Particle canvas ──────────────────────────────────────── */
+(function() {
+  const cv = document.getElementById('c'), cx = cv.getContext('2d');
+  const pts = [];
+  function resize() { cv.width = innerWidth; cv.height = innerHeight; }
+  resize(); addEventListener('resize', resize);
+  for (let i = 0; i < 75; i++) pts.push({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, vx: (Math.random()-.5)*.38, vy: (Math.random()-.5)*.38, r: Math.random()*1.4+.4, o: Math.random()*.45+.1 });
+  (function loop() {
+    cx.clearRect(0,0,cv.width,cv.height);
+    pts.forEach(p => {
+      cx.beginPath(); cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      cx.fillStyle=`rgba(92,158,255,${p.o})`; cx.fill();
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>cv.width) p.vx*=-1;
+      if(p.y<0||p.y>cv.height) p.vy*=-1;
+    });
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+      const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);
+      if(d<115){ cx.beginPath(); cx.moveTo(pts[i].x,pts[i].y); cx.lineTo(pts[j].x,pts[j].y); cx.strokeStyle=`rgba(41,121,255,${.11*(1-d/115)})`; cx.lineWidth=.7; cx.stroke(); }
+    }
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ── Nav scroll ───────────────────────────────────────────── */
+const nav = document.getElementById('nav');
+const stbtn = document.getElementById('stbtn');
+addEventListener('scroll', () => {
+  const s = scrollY > 55;
+  nav.classList.toggle('scrolled', s);
+  stbtn.classList.toggle('on', s);
+});
+stbtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ── Mobile nav ───────────────────────────────────────────── */
+const burger = document.getElementById('burger');
+const mob    = document.getElementById('mobnav');
+const mbc    = document.getElementById('mobclose');
+burger.addEventListener('click', () => mob.classList.add('open'));
+mbc.addEventListener('click',    () => mob.classList.remove('open'));
+document.querySelectorAll('.mobl').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
+
+/* ── Scroll reveal ────────────────────────────────────────── */
+new IntersectionObserver(
+  es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); }),
+  { threshold: 0.08 }
+).observe.bind(null); // bind pattern — use loop below
+const ro = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); }), { threshold: 0.08 });
+document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+
+/* ── Skill bars ───────────────────────────────────────────── */
+const bo = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting) e.target.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
+}), { threshold: 0.25 });
+document.querySelectorAll('.sk-card').forEach(el => bo.observe(el));
+
+/* ── Project filter ───────────────────────────────────────── */
+document.querySelectorAll('.fbtn').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  const f = btn.dataset.f;
+  document.querySelectorAll('.pc').forEach(c => { c.style.display = (f==='all' || c.dataset.cat===f) ? 'flex' : 'none'; });
+}));
+
+/* ── Contact form ─────────────────────────────────────────── */
+document.getElementById('cform').addEventListener('submit', e => {
+  e.preventDefault();
+  const b = e.target.querySelector('.btn-send');
+  b.innerHTML = '<span class="material-icons-round">check_circle</span>Sent!';
+  b.style.background = '#00C853';
+  setTimeout(() => { b.innerHTML = '<span class="material-icons-round">send</span>Send Message'; b.style.background=''; e.target.reset(); }, 3000);
+});
+</script>
+</body>
+</html>
