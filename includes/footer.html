@@ -1,0 +1,87 @@
+
+	<footer>
+		<p>Designed &amp; built by <a href="https://github.com/skystone1000">Aditya Mahajan</a> &nbsp;·&nbsp; 2026</p>
+	</footer>
+
+	<button class="stbtn" id="stbtn">
+		<span class="material-icons-round">keyboard_arrow_up</span>
+	</button>
+
+	<script>
+		/* ── Particle canvas ──────────────────────────────────────── */
+		const cv = document.getElementById('c');
+		if (cv) {
+			const cx = cv.getContext('2d');
+			const pts = [];
+			function resize() { cv.width = innerWidth; cv.height = innerHeight; }
+			resize(); addEventListener('resize', resize);
+			for (let i = 0; i < 75; i++) pts.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, vx: (Math.random() - .5) * .38, vy: (Math.random() - .5) * .38, r: Math.random() * 1.4 + .4, o: Math.random() * .45 + .1 });
+			(function loop() {
+				cx.clearRect(0, 0, cv.width, cv.height);
+				pts.forEach(p => {
+					cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+					cx.fillStyle = `rgba(92,158,255,${p.o})`; cx.fill();
+					p.x += p.vx; p.y += p.vy;
+					if (p.x < 0 || p.x > cv.width) p.vx *= -1;
+					if (p.y < 0 || p.y > cv.height) p.vy *= -1;
+				});
+				for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+					const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
+					if (d < 115) { cx.beginPath(); cx.moveTo(pts[i].x, pts[i].y); cx.lineTo(pts[j].x, pts[j].y); cx.strokeStyle = `rgba(41,121,255,${.11 * (1 - d / 115)})`; cx.lineWidth = .7; cx.stroke(); }
+				}
+				requestAnimationFrame(loop);
+			})();
+		}
+
+		/* ── Nav scroll ───────────────────────────────────────────── */
+		const nav = document.getElementById('nav');
+		const stbtn = document.getElementById('stbtn');
+		if (!cv) nav.classList.add('scrolled');
+		addEventListener('scroll', () => {
+			if (cv) nav.classList.toggle('scrolled', scrollY > 55);
+			stbtn.classList.toggle('on', scrollY > 55);
+		});
+		stbtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+		/* ── Mobile nav ───────────────────────────────────────────── */
+		const burger = document.getElementById('burger');
+		const mob = document.getElementById('mobnav');
+		const mbc = document.getElementById('mobclose');
+		burger.addEventListener('click', () => mob.classList.add('open'));
+		mbc.addEventListener('click', () => mob.classList.remove('open'));
+		document.querySelectorAll('.mobl').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
+
+		/* ── Scroll reveal ────────────────────────────────────────── */
+		const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }), { threshold: 0.08 });
+		document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+
+		/* ── Skill bars ───────────────────────────────────────────── */
+		if (document.querySelector('.sk-card')) {
+			const bo = new IntersectionObserver(es => es.forEach(e => {
+				if (e.isIntersecting) e.target.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
+			}), { threshold: 0.25 });
+			document.querySelectorAll('.sk-card').forEach(el => bo.observe(el));
+		}
+
+		/* ── Project filter ───────────────────────────────────────── */
+		if (document.querySelector('.fbtn')) {
+			document.querySelectorAll('.fbtn').forEach(btn => btn.addEventListener('click', () => {
+				document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('on'));
+				btn.classList.add('on');
+				const f = btn.dataset.f;
+				document.querySelectorAll('.pc').forEach(c => { c.style.display = (f === 'all' || c.dataset.cat === f) ? 'flex' : 'none'; });
+			}));
+		}
+
+		/* ── Contact form ─────────────────────────────────────────── */
+		const cform = document.getElementById('cform');
+		if (cform) {
+			cform.addEventListener('submit', e => {
+				e.preventDefault();
+				const b = e.target.querySelector('.btn-send');
+				b.innerHTML = '<span class="material-icons-round">check_circle</span>Sent!';
+				b.style.background = '#00C853';
+				setTimeout(() => { b.innerHTML = '<span class="material-icons-round">send</span>Send Message'; b.style.background = ''; e.target.reset(); }, 3000);
+			});
+		}
+	</script>

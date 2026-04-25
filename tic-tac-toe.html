@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <script defer src="./includes/loader.js"></script>
   <style>
     :root { --primary:#2979FF; --primary-light:#5C9EFF; --accent:#00E5FF; --accent-dim:rgba(0,229,255,.12); --bg:#080D1A; --bg2:#0D1526; --surface:#111827; --surface2:#1A2438; --border:rgba(255,255,255,.07); --text:#E8EDF5; --text2:#8A99B3; --text3:#4A5568; --r:14px; --rs:8px; --shadow:0 8px 32px rgba(0,0,0,.45); --glow:0 0 40px rgba(41,121,255,.18); --ease:.3s cubic-bezier(.4,0,.2,1); }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0} body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden} a{color:inherit;text-decoration:none} ::selection{background:var(--primary);color:#fff}
@@ -21,15 +22,8 @@
     @media(max-width:900px){.game-shell{grid-template-columns:1fr}.side{order:2}.nav-links{display:none}}@media(max-width:560px){.wrap{padding-left:5vw;padding-right:5vw}.hero-panel{padding:1.2rem}.board{gap:8px;padding:9px}.cell{border-radius:12px}.stats{grid-template-columns:1fr 1fr 1fr;gap:.6rem}.stat{padding:.75rem}.status{align-items:flex-start;flex-direction:column}.winner-text{text-align:left}}
   </style>
 </head>
-<body>
-  <nav>
-    <a href="index.html#hero" class="nav-logo">AM</a>
-    <ul class="nav-links">
-      <li><a href="index.html#projects">Projects</a></li>
-      <li><a href="games.html" class="active">Games</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-    </ul>
-  </nav>
+<body data-page="games">
+  <div data-include="./includes/header.html"></div>
 
   <main class="wrap">
     <div class="game-shell">
@@ -82,6 +76,8 @@
       </aside>
     </div>
   </main>
+
+  <div data-include="./includes/footer.html"></div>
 
   <script>
     const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];

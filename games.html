@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <script defer src="./includes/loader.js"></script>
   <style>
     :root {
       --primary: #2979FF;
@@ -87,18 +88,8 @@
     @media (max-width: 700px) { .nav-links, .nav-btn { display: none; } .hero { padding-top: 110px; min-height: auto; } section { padding: 66px 5vw; } }
   </style>
 </head>
-<body>
-  <nav>
-    <a href="index.html#hero" class="nav-logo">AM</a>
-    <ul class="nav-links">
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="index.html#experience">Experience</a></li>
-      <li><a href="index.html#skills">Skills</a></li>
-      <li><a href="index.html#projects">Projects</a></li>
-      <li><a href="games.html" class="active">Games</a></li>
-    </ul>
-    <a href="index.html#contact" class="nav-btn">Get In Touch</a>
-  </nav>
+<body data-page="games">
+  <div data-include="./includes/header.html"></div>
 
   <main>
     <header class="hero">
@@ -156,15 +147,6 @@
     </section>
   </main>
 
-  <footer>
-    <p>Designed &amp; built by <a href="index.html">Aditya Mahajan</a> &nbsp;·&nbsp; Games Showcase</p>
-  </footer>
-
-  <script>
-    const ro = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('on');
-    }), { threshold: 0.08 });
-    document.querySelectorAll('.rv').forEach(el => ro.observe(el));
-  </script>
+  <div data-include="./includes/footer.html"></div>
 </body>
 </html>
