@@ -56,10 +56,14 @@ Every HTML page follows this pattern:
 
 **Important:** The site requires HTTP (not `file://`) to work — use `python -m http.server 8000` or VS Code Live Server for local development.
 
+## Shared stylesheet (`includes/main.css`)
+- Full CSS design system (~1429 lines): variables, reset, nav, hero, sections, responsive breakpoints
+- Linked directly in each page's `<head>` — loads as a blocking stylesheet, eliminating FOUC completely
+- No JavaScript involved in CSS delivery
+
 ## Shared header (`includes/header.html`)
-- Full CSS design system (~1430 lines): variables, reset, nav, hero, sections, responsive
-- `<nav id="nav">` with logo linking to `index.html`, section links as `index.html#section`, Games link with `data-page="games"`
-- `.mob-nav` mobile overlay with burger menu
+- Nav HTML only (24 lines): `<nav id="nav">` + `.mob-nav` mobile overlay
+- Logo links to `index.html`, section links use `index.html#section` format, Games link has `data-page="games"`
 
 ## Shared footer (`includes/footer.html`)
 Contains all shared JS with null guards for index-only elements:
