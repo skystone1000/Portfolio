@@ -1,4 +1,4 @@
-﻿	/* â”€â”€ Variables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+	/* â”€â”€ Variables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 	:root {
 		--primary: #2979FF;
 		--primary-light: #5C9EFF;
@@ -201,10 +201,11 @@
 		font-weight: 800;
 		font-size: 1.3rem;
 		letter-spacing: -0.5px;
-		background: linear-gradient(135deg, var(--primary-light), var(--accent));
+		background: linear-gradient(135deg, #5C9EFF, #00E5FF);
 		-webkit-background-clip: text;
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
+		color: transparent;
 	}
 
 	.nav-links {
@@ -372,10 +373,11 @@
 	}
 
 	.hero-name span {
-		background: linear-gradient(135deg, #5C9EFF, var(--accent));
+		background: linear-gradient(135deg, #5C9EFF, #00E5FF);
 		-webkit-background-clip: text;
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
+		color: transparent;
 	}
 
 	.hero-role {
