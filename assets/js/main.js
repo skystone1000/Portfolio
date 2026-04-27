@@ -23,12 +23,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 		document.body.appendChild(s);
 	});
 
-	// On index.html (pathname ends with / or /index.html), strip the filename
-	// from nav links so section anchors work without a page reload
+	// On index.html, strip /index.html from nav links so section anchors
+	// work without a page reload (root-relative paths used throughout)
 	const isIndex = /\/(index\.html)?$/.test(window.location.pathname);
 	if (isIndex) {
-		document.querySelectorAll('a[href^="index.html"]').forEach(a =>
-			a.setAttribute('href', a.getAttribute('href').replace('index.html', '')));
+		document.querySelectorAll('a[href^="/index.html"]').forEach(a =>
+			a.setAttribute('href', a.getAttribute('href').replace('/index.html', '')));
 	}
 
 	// Mark the active nav link by matching data-page on <body>

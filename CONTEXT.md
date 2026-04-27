@@ -1,7 +1,7 @@
 # Portfolio — Project Context
 
 ## Overview
-Aditya Mahajan's personal portfolio showcasing work, experience, and projects. Includes a games section with browser-based games.
+Aditya Mahajan's personal portfolio showcasing work, experience, and projects. Games live in a separate repo at games.adityamahajan.in.
 
 **Type:** Static web app  
 **Language / framework:** Vanilla HTML / CSS / JavaScript  
@@ -10,20 +10,22 @@ Aditya Mahajan's personal portfolio showcasing work, experience, and projects. I
 
 ## Entry points
 - `index.html` — Main portfolio (hero, about, experience, skills, projects, YouTube, contact)
-- `games.html` — Games hub page
-- `tic-tac-toe.html` — Fully playable Tic Tac Toe browser game
+- Games are hosted separately at https://games.adityamahajan.in (separate repo)
 
 ## Folder structure
 ```
 Portfolio/
+├── index.html               # Portfolio page body; uses data-include for header + footer
 ├── includes/
-│   ├── header.html   # Shared CSS (1430 lines) + nav + mobile nav partial
-│   ├── footer.html   # Shared footer element + scroll-to-top button + all shared JS
-│   └── loader.js     # data-include loader: fetch → DOMParser → inject style/html/script
-├── index.html        # Portfolio page body; uses data-include for header + footer
-├── games.html        # Games hub; uses data-include for header + footer
-├── tic-tac-toe.html  # Game page; uses data-include for header + footer
-├── CNAME             # adityamahajan.in
+│   ├── header.html          # Nav HTML only (root-relative links throughout)
+│   └── footer.html          # Shared footer element + scroll-to-top + all shared JS
+├── assets/
+│   ├── css/
+│   │   └── main.css         # Full CSS design system (~1429 lines): variables, reset, nav, sections
+│   ├── js/
+│   │   └── main.js          # data-include loader: fetch → DOMParser → inject style/html/script
+│   └── images/
+├── CNAME                    # adityamahajan.in
 └── README.md
 ```
 
@@ -35,35 +37,42 @@ Every HTML page follows this pattern:
 <html lang="en">
 <head>
   <!-- font/icon links -->
-  <script defer src="./includes/loader.js"></script>
+  <link rel="stylesheet" href="[relative path to]/assets/css/main.css" />
+  <script defer src="[relative path to]/assets/js/main.js"></script>
 </head>
 <body data-page="<page-id>">
-  <div data-include="./includes/header.html"></div>
+  <div data-include="[relative path to]/includes/header.html"></div>
   <!-- page content -->
-  <div data-include="./includes/footer.html"></div>
+  <div data-include="[relative path to]/includes/footer.html"></div>
 </body>
 </html>
 ```
 
-`loader.js` on DOMContentLoaded:
+Relative path prefix:
+- Root pages (`index.html`): `./`
+- Pages in subdirectories (`games/*.html`): `../`
+
+`main.js` on DOMContentLoaded:
 1. Fetches each `[data-include]` URL in parallel
 2. Injects `<style>` tags from the fetched doc into `<head>`
 3. Sets the placeholder div's `innerHTML` to the fetched body HTML
 4. Collects all `<script>` tags and re-executes them after ALL includes are injected (scripts injected via innerHTML don't execute; must create new `<script>` elements)
-5. On index.html (pathname ends with `/` or `/index.html`), strips `index.html` prefix from nav href attributes so anchor links work without a page reload
+5. On index.html (pathname ends with `/` or `/index.html`), strips `/index.html` prefix from nav href attributes so anchor links work without a page reload
 6. Adds `.active` to the nav link whose `data-page` attribute matches `document.body.dataset.page`
 7. Dispatches `includes-loaded` CustomEvent
 
 **Important:** The site requires HTTP (not `file://`) to work — use `python -m http.server 8000` or VS Code Live Server for local development.
 
-## Shared stylesheet (`includes/main.css`)
+## Shared stylesheet (`assets/css/main.css`)
 - Full CSS design system (~1429 lines): variables, reset, nav, hero, sections, responsive breakpoints
 - Linked directly in each page's `<head>` — loads as a blocking stylesheet, eliminating FOUC completely
 - No JavaScript involved in CSS delivery
 
 ## Shared header (`includes/header.html`)
 - Nav HTML only (24 lines): `<nav id="nav">` + `.mob-nav` mobile overlay
-- Logo links to `index.html`, section links use `index.html#section` format, Games link has `data-page="games"`
+- All links use **root-relative paths** (`/index.html`, `/index.html#section`, `/games/games.html`)
+- Root-relative is required because the nav is injected into pages at different directory depths
+- Logo links to `/index.html`, section links use `/index.html#section` format, Games link has `data-page="games"`
 
 ## Shared footer (`includes/footer.html`)
 Contains all shared JS with null guards for index-only elements:
@@ -79,8 +88,6 @@ Contains all shared JS with null guards for index-only elements:
 | Page | data-page |
 |------|-----------|
 | index.html | `home` |
-| games.html | `games` |
-| tic-tac-toe.html | `games` |
 
 ## Key dependencies
 - Google Fonts: Inter (300–800)
@@ -88,15 +95,15 @@ Contains all shared JS with null guards for index-only elements:
 - No npm packages, no build step
 
 ## Data flow
-Static pages → loader.js fetches includes → nav + CSS injected → shared JS runs → page interactive
+Static pages → main.js fetches includes → CSS (blocking link) already loaded → nav + footer injected → shared JS runs → page interactive
 
 ## Coding conventions
-- All CSS is embedded in `includes/header.html` and page-specific `<style>` blocks
+- All CSS is in `assets/css/main.css` and page-specific `<style>` blocks
 - No TypeScript, no linting (plain HTML/CSS/JS)
 - Responsive breakpoints: 900px (layout shift) and 640px (mobile nav)
+- Nav links always root-relative to work across directory depths
 
 ## Known issues / TODOs
-- Implement new games (Memory Cards, 2048, Snake — placeholder cards exist in games.html)
 - Local development requires an HTTP server (`file://` fetch blocked by CORS)
 
 ## Architecture decision record (ADR)
@@ -105,12 +112,16 @@ Static pages → loader.js fetches includes → nav + CSS injected → shared JS
 | `data-include` + fetch loader | Zero build tooling; works with GitHub Pages static hosting | 2026-04-25 |
 | Defer scripts until all includes are injected | Footer JS references nav elements from header include; must wait for DOM | 2026-04-25 |
 | Null guards in footer.html scripts | Canvas, skill bars, project filter, contact form only exist on index.html | 2026-04-25 |
+| Root-relative paths in header.html | Nav is injected into pages; absolute external links (games.adityamahajan.in) don't need path adjustment | 2026-04-25 |
+| CSS as blocking `<link>` (not injected via JS) | Eliminates FOUC — browser cannot paint before render-blocking CSS loads | 2026-04-25 |
 
 ## Feature changelog
 | Feature / change | Files affected | Date |
 |-----------------|---------------|------|
-| Implemented data-include system | includes/loader.js (new), includes/header.html, includes/footer.html, index.html, games.html, tic-tac-toe.html | 2026-04-25 |
-| Added games hub + Tic Tac Toe game | games.html, tic-tac-toe.html | prior |
+| Implemented data-include system | includes/main.js (new), includes/header.html, includes/footer.html, index.html, games/*.html | 2026-04-25 |
+| Fixed FOUC with blocking CSS link | assets/css/main.css (extracted from header.html), index.html | 2026-04-25 |
+| Restructured assets + moved games to /games | assets/css/main.css, assets/js/main.js, includes/header.html (root-relative links) | 2026-04-25 |
+| Extracted games to separate repo | includes/header.html Games link → https://games.adityamahajan.in | 2026-04-28 |
 
 ---
-Last updated: 2026-04-25 — includes system implementation
+Last updated: 2026-04-28 — games extracted to games.adityamahajan.in
