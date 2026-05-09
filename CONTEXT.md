@@ -61,7 +61,7 @@ Relative path prefix:
 6. Adds `.active` to the nav link whose `data-page` attribute matches `document.body.dataset.page`
 7. Dispatches `includes-loaded` CustomEvent
 
-**Important:** The site requires HTTP (not `file://`) to work — use `python -m http.server 8000` or VS Code Live Server for local development.
+**Important:** The site requires HTTP (not `file://`) to work — use `python3 -m http.server 8000` or VS Code Live Server for local development.
 
 ## Shared stylesheet (`assets/css/main.css`)
 - Full CSS design system (~1429 lines): variables, reset, nav, hero, sections, responsive breakpoints
