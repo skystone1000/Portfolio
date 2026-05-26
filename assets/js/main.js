@@ -39,5 +39,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 		});
 	}
 
+	document.querySelectorAll('a[href^="#"]').forEach(a => {
+		a.addEventListener('click', e => {
+			const id = a.getAttribute('href').slice(1);
+			const target = id && document.getElementById(id);
+			if (!target) return;
+			e.preventDefault();
+			history.pushState(null, '', `#${id}`);
+			target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		});
+	});
+
 	document.dispatchEvent(new CustomEvent('includes-loaded'));
 });
